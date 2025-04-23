@@ -1,0 +1,28 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Database
+*.sqlite
+*.db
+*.sqlite3
+
+# Logs
+*.log
+
+# Cache files
+kaspi_price_data.json
+
+# OS files
+.DS_Store
+Thumbs.db

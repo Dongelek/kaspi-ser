@@ -79,6 +79,7 @@ class KaspiResult(db.Model):
     kaspi_price = Column(Float)
     price_difference_percent = Column(Float)
     sellers = Column(Text) # Хранится как JSON-строка
+    kaspi_url = Column(String(500), nullable=True) # URL для проверки на Kaspi.kz
     
     # Связь многие-к-одному с товаром
     product = relationship("Product", back_populates="kaspi_results")
@@ -103,5 +104,6 @@ class KaspiResult(db.Model):
             "kaspi_name": self.kaspi_name,
             "kaspi_price": self.kaspi_price,
             "price_difference_percent": self.price_difference_percent,
-            "sellers": self.get_sellers()
+            "sellers": self.get_sellers(),
+            "kaspi_url": self.kaspi_url if hasattr(self, 'kaspi_url') else None
         }
