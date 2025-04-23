@@ -6,26 +6,19 @@ from werkzeug.utils import secure_filename
 from parser import process_xml_and_scan
 from models import db, Comparison, Product, KaspiResult
 import json
+from dotenv import load_dotenv
 
-# Configure logging
-logging.basicConfig(level=logging.DEBUG, 
-                   format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+# Загрузка переменных окружения из .env (если запущено локально)
+load_dotenv()
 
-# Initialize Flask app
+# Создание Flask-приложения
 app = Flask(__name__)
-app.secret_key = os.environ.get("SESSION_SECRET", "kaspi-price-comparison-tool")
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # Limit upload size to 16MB
 
-# Configure database
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
+# Настройки подключения к БД
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")  # Railway подтянет из переменных окружения
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
-    "pool_recycle": 300,
-    "pool_pre_ping": True,
-}
 
-# Initialize database
+# Инициализация SQLAlchemy
 db.init_app(app)
 
 # Create database tables if they don't exist
