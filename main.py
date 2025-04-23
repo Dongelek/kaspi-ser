@@ -6,16 +6,12 @@ from werkzeug.utils import secure_filename
 from parser import process_xml_and_scan
 from models import db, Comparison, Product, KaspiResult
 import json
-from dotenv import load_dotenv
-
-# Загрузка переменных окружения из .env (если запущено локально)
-load_dotenv()
 
 # Создание Flask-приложения
 app = Flask(__name__)
 
-# Настройки подключения к БД
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")  # Railway подтянет из переменных окружения
+# Настройки подключения к БД из переменной окружения
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Инициализация SQLAlchemy
